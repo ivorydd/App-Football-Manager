@@ -8,10 +8,6 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        ArrayList<Person> people = new ArrayList<>();
-        loadPersonDate(people);
-        boolean search = Person.searchPersonInMarket(people);
-        System.out.println(search);
     }
 
     public static void showMenu() {
@@ -76,6 +72,20 @@ public class Main {
 
     public static void loadPersonDate(ArrayList<Person> people) {
         FileManager.loadMarket("src/resource/mercat_fitxatges.txt", people);
+    }
+
+    public void addPerson() {
+        System.out.println("Register player or coach: \n" +
+                "1. Player\n" +
+                "2. Coach");
+        Scanner sc = new Scanner(System.in);
+        int option = 1;
+        if (option == 1) {
+            Player.createPlayer();
+        } if (option == 2) {
+            Coach.createCoach();
+        }
+
     }
 
 }

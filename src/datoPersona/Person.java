@@ -34,25 +34,36 @@ public class Person {
         }
     }
 
-    public static boolean searchPersonInMarket(ArrayList<Person> persons) {
+    public static boolean searchPersonInMarket(String playerName) {
         try {
-            Scanner sc = new Scanner(System.in);
-            System.out.println("Input the person name: ");
-            String playerName = sc.nextLine();
             BufferedReader br = new BufferedReader(new FileReader("src/resource/mercat_fitxatges.txt"));
             String line;
-            for(Person person : persons) {
-                while ((line = br.readLine()) != null) {
-                    String[] parts = line.split(";");
-                    if (parts[1].toLowerCase().contains(playerName.toLowerCase())) {
-                        return true;
-                    }
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(";");
+                if (parts[1].toLowerCase().contains(playerName.toLowerCase())) {
+                    return true;
                 }
-            }
+                }
         } catch (IOException e) {
             System.out.println("Fail to load file!");
         }
         return false;
+    }
+
+    public static Person createPerson() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Input the person's name: ");
+        String name = sc.nextLine();
+        System.out.println("Input the person's surname: ");
+        String surname = sc.nextLine();
+        System.out.println("Input the person's birthday: ");
+        String birthday = sc.nextLine();
+        System.out.println("Input the person's motivation level: ");
+        int motivation = sc.nextInt();
+        System.out.println("Input the person's annual salary: ");
+        double annualSalary = sc.nextDouble();
+        sc.close();
+        return new Person(name, surname, birthday, motivation, annualSalary) {};
     }
 
     @Override

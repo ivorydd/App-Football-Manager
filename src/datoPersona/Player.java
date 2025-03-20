@@ -2,6 +2,7 @@ package datoPersona;
 
 import java.util.Objects;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Player extends Person {
     private int playerNumber;
@@ -105,6 +106,20 @@ public class Player extends Person {
 
     public int getQuality() {
         return quality;
+    }
+
+    public static Player createPlayer() {
+        Person person = Person.createPerson();
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Input the person's player number: ");
+        int playerNumber = sc.nextInt();
+        System.out.println("Input the person's position(POR|DEF|MIG|DAV): ");
+        String position = sc.nextLine();
+        System.out.println("Input the person's quality(30 - 100): ");
+        int quality = sc.nextInt();
+        sc.close();
+        return new Player(person.name, person.surname, person.birthDate, person.motivationLevel, person.annualSalary,
+                playerNumber, position, quality);
     }
 
     @Override
