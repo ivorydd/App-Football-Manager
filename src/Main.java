@@ -1,13 +1,17 @@
 import datoPersona.Coach;
 import datoPersona.Person;
 import datoPersona.Player;
-
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Person> market = new ArrayList<>();
+        ArrayList<Team> teams = new ArrayList<>();
+        loadPersonDate(market);
+        inputMenuOptions(sc, market);
     }
 
     public static void showMenu() {
@@ -26,8 +30,46 @@ public class Main {
                 "You option: ");
     }
 
-    public static void inputMenuOptions() {
-        Scanner sc = new Scanner(System.in);
+    public static void showTeamMenu() {
+        System.out.println("Team Manager:\n" +
+                "1- Deregister team\n" +
+                "2- Modify president\n" +
+                "3- Dismiss coach\n" +
+                "4- Register player or coach\n" +
+                " 0- Exit");
+    }
+
+    public static void inputTeamMenu(Scanner sc) {
+        int option = 1;
+        do {
+            showTeamMenu();
+            try {
+                option = sc.nextInt();
+                if (option < 0 || option > 4) {
+                    System.out.println("Invalid option. Try again.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid option!");
+                sc.nextLine();
+            }
+            teamMenuOptionSwitch(option, sc);
+        } while (option != 0);
+    }
+
+    public static void teamMenuOptionSwitch(int option, Scanner sc) {
+        switch (option) {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+        }
+    }
+
+    public static void inputMenuOptions(Scanner sc, ArrayList<Person> market) {
         int option = 1;
         do {
             showMenu();
@@ -40,12 +82,11 @@ public class Main {
                 System.out.println("Invalid option!");
                 sc.nextLine();
             }
-            menuOptionsSwitch(option);
+            menuOptionsSwitch(option, sc, market);
         } while (option != 0);
-        sc.close();
     }
 
-    public static void menuOptionsSwitch(int option) {
+    public static void menuOptionsSwitch(int option, Scanner sc, ArrayList<Person> market) {
         switch (option) {
             case 1:
                 break;
@@ -54,6 +95,7 @@ public class Main {
             case 3:
                 break;
             case 4:
+                addPersonToMarket(sc, market);
                 break;
             case 5:
                 break;
@@ -74,18 +116,51 @@ public class Main {
         FileManager.loadMarket("src/resource/mercat_fitxatges.txt", people);
     }
 
-    public void addPerson() {
+    public static void addPersonToMarket(Scanner sc, ArrayList<Person> market) {
+        boolean exit = false;
         System.out.println("Register player or coach: \n" +
                 "1. Player\n" +
-                "2. Coach");
-        Scanner sc = new Scanner(System.in);
-        int option = 1;
-        if (option == 1) {
-            Player.createPlayer();
-        } if (option == 2) {
-            Coach.createCoach();
-        }
+                "2. Coach\n" +
+                "3. Exit");
+        do {
+            int option = sc.nextInt();
+            if (option == 1) {
+                Person.addPersonToMarket(market, Player.createPlayer(sc));
+                exit = true;
+            }
+            if (option == 2) {
+                Person.addPersonToMarket(market, Coach.createCoach(sc));
+                exit = true;
+            } else if (option == 3) {
+                exit = true;
+            } else if (option < 1 || option > 3) {
+                System.out.println("Invalid option. Try again.");
+            }
+        } while (!exit);
+    }
 
+    public static void addPlayerOrCoachToTeam (Scanner sc, ArrayList<Person> market, ArrayList<Team> teams) {
+        boolean exit = false;
+        Team team = Team.searchTeamInTeamList(sc, teams);
+        System.out.println("Register player or coach: \n" +
+                "1. Player\n" +
+                "2. Coach\n" +
+                "3. Exit");
+        do {
+            int option = sc.nextInt();
+            if (option == 1) {
+                team.addPlayerToTeam(sc, market);
+                exit = true;
+            }
+            if (option == 2) {
+                team.setCoach();
+                exit = true;
+            } else if (option == 3) {
+                exit = true;
+            } else if (option < 1 || option > 3) {
+                System.out.println("Invalid option. Try again.");
+            }
+        } while (!exit);
     }
 
 }

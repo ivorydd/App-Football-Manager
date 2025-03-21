@@ -22,10 +22,9 @@ public class Coach extends Person {
         salaryIncrease();
     }
 
-    public static Coach createCoach() {
+    public static Coach createCoach(Scanner sc) {
         boolean isNationalTeamCoach=false, exit=false;
-        Person person = Person.createPerson();
-        Scanner sc = new Scanner(System.in);
+        Person person = Person.createPerson(sc);
         do {
             System.out.println("The coach is naitonal team coach? (Y/N): ");
             String response = sc.nextLine();
@@ -40,7 +39,6 @@ public class Coach extends Person {
         } while (!exit);
         System.out.println("How many match has the coach won: ");
         int numberOfWon = sc.nextInt();
-        sc.close();
         return new Coach(person.name, person.surname, person.birthDate, person.motivationLevel, person.annualSalary,
                 isNationalTeamCoach, numberOfWon);
     }
@@ -52,5 +50,15 @@ public class Coach extends Person {
                 "\nIs National Team Coach: " + this.isNationalTeamCoach+
                 "\nMatch had won: " + this.numberOfWon +
                 "\n------------------------------------------------";
+    }
+
+    //Getter
+
+    public boolean getIsNationalTeamCoach() {
+        return isNationalTeamCoach;
+    }
+
+    public int getNumberOfWon() {
+        return numberOfWon;
     }
 }

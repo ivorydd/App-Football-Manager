@@ -1,5 +1,6 @@
 package datoPersona;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
@@ -108,19 +109,19 @@ public class Player extends Person {
         return quality;
     }
 
-    public static Player createPlayer() {
-        Person person = Person.createPerson();
-        Scanner sc = new Scanner(System.in);
+    public static Player createPlayer(Scanner sc) {
+        Person person = Person.createPerson(sc);
         System.out.println("Input the person's player number: ");
         int playerNumber = sc.nextInt();
+        sc.nextLine();
         System.out.println("Input the person's position(POR|DEF|MIG|DAV): ");
-        String position = sc.nextLine();
+        String position = sc.nextLine().toUpperCase();
         System.out.println("Input the person's quality(30 - 100): ");
         int quality = sc.nextInt();
-        sc.close();
         return new Player(person.name, person.surname, person.birthDate, person.motivationLevel, person.annualSalary,
                 playerNumber, position, quality);
     }
+
 
     @Override
     public String toString() {
@@ -129,5 +130,14 @@ public class Player extends Person {
                 "\nPosition: " + this.position +
                 "\nQuality: " + this.quality +
                 "\n------------------------------------------------";
+    }
+
+    //Getter
+    public int getPlayerNumber() {
+        return playerNumber;
+    }
+
+    public String getPosition() {
+        return position;
     }
 }

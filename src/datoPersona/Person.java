@@ -50,20 +50,45 @@ public class Person {
         return false;
     }
 
-    public static Person createPerson() {
-        Scanner sc = new Scanner(System.in);
+    public static Person createPerson(Scanner sc) {
         System.out.println("Input the person's name: ");
+        sc.nextLine();
         String name = sc.nextLine();
         System.out.println("Input the person's surname: ");
         String surname = sc.nextLine();
         System.out.println("Input the person's birthday: ");
         String birthday = sc.nextLine();
-        System.out.println("Input the person's motivation level: ");
+        System.out.println("Input the person's motivation level(1-10): ");
         int motivation = sc.nextInt();
         System.out.println("Input the person's annual salary: ");
         double annualSalary = sc.nextDouble();
-        sc.close();
+        sc.nextLine();
         return new Person(name, surname, birthday, motivation, annualSalary) {};
+    }
+
+    public static void addPersonToMarket(ArrayList<Person> market, Person person) {
+        market.add(person);
+    }
+
+    public static Person loadSinglePersonData(ArrayList<Person> market, String personName) {
+        for (Person person : market) {
+            if (person instanceof Player && person.getName().equalsIgnoreCase(personName)) {
+                return (Player) person;
+            } else if (person instanceof Coach && person.getName().equalsIgnoreCase(personName)) {
+                return (Coach) person;
+            }
+        }
+        return null;
+    }
+
+    public static void removePersonFromMarket(ArrayList<Person> market, String personName) {
+        for (Person person : market) {
+            if (person instanceof Player && person.getName().equalsIgnoreCase(personName)) {
+                market.remove(person);
+            } else if (person instanceof Coach && person.getName().equalsIgnoreCase(personName)) {
+                market.remove(person);
+            }
+        }
     }
 
     @Override
@@ -73,5 +98,27 @@ public class Person {
                 + " \nBirthday: " + this.birthDate
                 + "\nMotivation Level: " + this.motivationLevel
                 + "\nAnnual Salary: " + this.annualSalary;
+    }
+
+    //Getter
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public int getMotivationLevel() {
+        return motivationLevel;
+    }
+
+    public double getAnnualSalary() {
+        return annualSalary;
     }
 }

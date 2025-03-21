@@ -10,6 +10,7 @@ public class FileManager {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
+                if (line.startsWith("#") || line.trim().isEmpty()) continue;
                 String[] parts = line.split(";");
                 String type = parts[0].trim();
                 String name = parts[1].trim();
@@ -34,6 +35,34 @@ public class FileManager {
             }
         } catch (IOException e) {
             System.out.println("Fail to load file: " + filePath);
+        }
+    }
+
+    public static void loadTeam(String filePath, ArrayList<Team> teams) {
+
+    }
+
+
+
+
+
+    public static void savePersonOfMarketToFile(ArrayList<Person> market, String filePath) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            for (Person p : market) {
+                if (p instanceof Player) {
+                    Player player = (Player) p;
+                    writer.write("J;" + player.getName() + ";" + player.getSurname() + ";" + player.getBirthDate() + ";" +
+                            player.getMotivationLevel() + ";" + player.getAnnualSalary()+ ";" + player.getPlayerNumber() + ";" +
+                            player.getPosition() + ";" + player.getQuality());
+                } else if (p instanceof Coach){
+                    Coach coach = (Coach) p;
+                    writer.write("E;" + coach.getName() + ";" + coach.getSurname() + ";" + coach.getBirthDate() + ";" +
+                            coach.getMotivationLevel() + ";" + coach.getAnnualSalary() + ";" + coach.getNumberOfWon() + ";" + coach.getIsNationalTeamCoach());
+                }writer.newLine();
+            }
+            System.out.println("Save data to " + filePath);
+        } catch (IOException e) {
+            System.out.println("Fail to save date to：" + e.getMessage());
         }
     }
 }
