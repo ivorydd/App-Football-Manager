@@ -34,18 +34,11 @@ public class Person {
         }
     }
 
-    public static boolean searchPersonInMarket(String playerName) {
-        try {
-            BufferedReader br = new BufferedReader(new FileReader("src/resource/mercat_fitxatges.txt"));
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(";");
-                if (parts[1].toLowerCase().contains(playerName.toLowerCase())) {
-                    return true;
-                }
-                }
-        } catch (IOException e) {
-            System.out.println("Fail to load file!");
+    public static boolean searchPersonInMarket(ArrayList<Person> market, String playerName) {
+        for (Person Person : market) {
+            if(Person.getName().equals(playerName)) {
+                return true;
+            }
         }
         return false;
     }
@@ -72,10 +65,8 @@ public class Person {
 
     public static Person loadSinglePersonData(ArrayList<Person> market, String personName) {
         for (Person person : market) {
-            if (person instanceof Player && person.getName().equalsIgnoreCase(personName)) {
-                return (Player) person;
-            } else if (person instanceof Coach && person.getName().equalsIgnoreCase(personName)) {
-                return (Coach) person;
+            if (person.getName().equalsIgnoreCase(personName)) {
+                return person;
             }
         }
         return null;
@@ -86,6 +77,8 @@ public class Person {
             if (person instanceof Player && person.getName().equalsIgnoreCase(personName)) {
                 market.remove(person);
             } else if (person instanceof Coach && person.getName().equalsIgnoreCase(personName)) {
+                market.remove(person);
+            } else if (person instanceof Person && person.getName().equalsIgnoreCase(personName)) {
                 market.remove(person);
             }
         }

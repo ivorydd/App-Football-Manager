@@ -7,7 +7,7 @@ public class Coach extends Person {
     private boolean isNationalTeamCoach;
     private int numberOfWon;
 
-    public Coach(String name, String surname, String birthDate, int motivationLevel, double annualSalary, boolean isNationalTeamCoach, int numberOfWon) {
+    public Coach(String name, String surname, String birthDate, int motivationLevel, double annualSalary, int numberOfWon, boolean isNationalTeamCoach) {
         super(name, surname, birthDate, motivationLevel, annualSalary);
         this.isNationalTeamCoach = isNationalTeamCoach;
         this.numberOfWon = numberOfWon;
@@ -40,9 +40,8 @@ public class Coach extends Person {
         System.out.println("How many match has the coach won: ");
         int numberOfWon = sc.nextInt();
         return new Coach(person.name, person.surname, person.birthDate, person.motivationLevel, person.annualSalary,
-                isNationalTeamCoach, numberOfWon);
+                numberOfWon, isNationalTeamCoach);
     }
-
 
     @Override
     public String toString() {
@@ -51,6 +50,7 @@ public class Coach extends Person {
                 "\nMatch had won: " + this.numberOfWon +
                 "\n------------------------------------------------";
     }
+
 
     //Getter
 
